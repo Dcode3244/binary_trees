@@ -11,48 +11,21 @@ int node_depth(const binary_tree_t *node);
 binary_tree_t *binary_trees_ancestor(const binary_tree_t *first,
 		const binary_tree_t *second)
 {
-	int dfirst, dsecond;
+	binary_tree_t *f_parent, *s_parent;
 
-	if ((first == NULL || first->parent == NULL) ||
-			(second == NULL || second->parent == NULL))
+	if (first == NULL || second == NULL)
 		return (NULL);
 
-	dfirst = node_depth(first);
-	dsecond = node_depth(second);
+	if (first == second)
+		return ((binary_tree_t *)first);
 
-	for (; dfirst < dsecond; dsecond--)
-		second = second->parent;
+	f_parent = first->parent;
+	s_parent = second->parent;
+	if (first == s_parent || !f_parent || (!f_parent->parent && s_parent))
+		return (binary_trees_ancestor(first, s_parent));
 
-	for (; dfirst > dsecond; dfirst--)
-		first = first->parent;
+	if (second == f_parent || !s_parent || (!s_parent->parent && f_parent))
+		return (binary_trees_ancestor(f_parent, second));
 
-	do {
-		if (first == second)
-		{
-			first = first->left;
-			return (first->parent);
-		}
-			first = first->parent;
-		second = second->parent;
-	} while (first != NULL);
-
-	return (NULL);
-}
-
-/**
- * node_depth - finds the depthi of a node in a binary tree
- * @node: a node of a binary tree
- * Return: the depth of the binary tree node
- */
-int node_depth(const binary_tree_t *node)
-{
-	int depth;
-	binary_tree_t temp;
-
-	temp = *node;
-
-	for (depth = 0; temp.parent; depth++)
-		temp = *(temp.parent);
-
-	return (depth);
+	return (binary_trees_ancestor(f_parent, s_parent));
 }
