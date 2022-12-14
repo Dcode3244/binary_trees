@@ -12,9 +12,9 @@ void binary_tree_levelorder(const binary_tree_t *tree, void (*func)(int))
 {
 	int i, h;
 
-	h = height((binary_tree_t *)tree) - 1;
+	h = height((binary_tree_t *)tree);
 
-	for (i = 0; i <= h; i++)
+	for (i = 1; i <= h; i++)
 		print_current_level((binary_tree_t *)tree, i, func);
 }
 
@@ -28,9 +28,9 @@ void print_current_level(binary_tree_t *tree, int level, void (*func)(int))
 {
 	if (!tree)
 		return;
-	if (level == 0)
+	if (level == 1)
 		func(tree->n);
-	else if (level > 0)
+	else if (level > 1)
 	{
 		print_current_level(tree->left, level - 1, func);
 		print_current_level(tree->right, level - 1, func);
