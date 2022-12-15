@@ -28,23 +28,23 @@ bst_t *bst_insert(bst_t **tree, int value)
 
 	while (temp)
 	{
-		if (temp->n > new->n)
+		if (temp->n > value)
 		{
 			if (temp->left == NULL)
 			{
 				temp->left = new;
 				new->parent = temp;
-				return (new);
+				return (temp->left);
 			}
 			temp = temp->left;
 		}
-		else if (temp->n < new->n)
+		else if (temp->n < value)
 		{
 			if (temp->right == NULL)
 			{
 				temp->right = new;
 				new->parent = temp;
-				return (new);
+				return (temp->right);
 			}
 			temp = temp->right;
 		}
